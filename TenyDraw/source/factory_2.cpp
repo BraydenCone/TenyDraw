@@ -81,6 +81,50 @@ void factory::batch_context::text(vec2 position, float scale, const char* str, f
 	vertex_count = index;
 }
 
+void factory::batch_context::glyph_icon(vec2 position, float scale, uint64_t code_point, rgba color)
+{
+	glyph_base glyph = *get_glyph(code_point);
+
+	vec2 uv_a(glyph.uv.x, glyph.uv.y);
+	vec2 uv_c(glyph.uv.z, glyph.uv.w);
+	vec2 uv_b(uv_c.x, uv_a.y);
+	vec2 uv_d(uv_a.x, uv_c.y);
+
+	vec3 pos_a(position.x, position.y, 0.0f);
+	vec3 pos_c(pos_a.x + ((float)glyph.x1 * scale), pos_a.y + ((float)glyph.y1 * scale), 0.0f);
+	vec3 pos_b(pos_c.x, pos_a.y, 0.0f);
+	vec3 pos_d(pos_a.x, pos_c.y, 0.0f);
+
+	reserve(4, 6);
+
+	write_index[0] = vertex_count + 0;
+	write_index[1] = vertex_count + 1;
+	write_index[2] = vertex_count + 2;
+	write_index[3] = vertex_count + 0;
+	write_index[4] = vertex_count + 2;
+	write_index[5] = vertex_count + 3;
+
+	write_vertex[0].position = pos_a;
+	write_vertex[0].uv = uv_a;
+	write_vertex[0].color = color;
+
+	write_vertex[1].position = pos_b;
+	write_vertex[1].uv = uv_b;
+	write_vertex[1].color = color;
+
+	write_vertex[2].position = pos_c;
+	write_vertex[2].uv = uv_c;
+	write_vertex[2].color = color;
+
+	write_vertex[3].position = pos_d;
+	write_vertex[3].uv = uv_d;
+	write_vertex[3].color = color;
+
+	write_vertex += 4;
+	write_index += 6;
+	vertex_count += 4;
+}
+
 factory::batch_context* factory::get_context()
 {
 	return &g_context;

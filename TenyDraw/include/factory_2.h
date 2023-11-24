@@ -93,10 +93,6 @@ namespace factory
 		typedef T value_type;
 		typedef value_type* iterator;
 	private:
-		inline bool is_valid(uint64_t index)
-		{
-			return index >= 0 && index <= _capacity;
-		}
 	public:
 		new_stack()
 		{
@@ -212,6 +208,11 @@ namespace factory
 		inline void clear()
 		{
 			memset(this, 0, sizeof(*this));
+		}
+
+		inline bool is_valid(uint64_t index)
+		{
+			return index >= 0 && index <= _capacity;
 		}
 	};
 
@@ -392,6 +393,7 @@ namespace factory
 		
 		void rect(vec2 position, vec2 size, rgba color);
 		void text(vec2 position, float scale, const char* str, rgba color, uint64_t length);
+		void glyph_icon(vec2 position, float scale, uint64_t code_point, rgba color);
 	};
 
 	batch_context* get_context();

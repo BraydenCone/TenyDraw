@@ -261,7 +261,6 @@ int bcdx11::create_textures()
 
 	D3D11_SUBRESOURCE_DATA image_sub_resource;
 	ZeroMemory(&image_sub_resource, sizeof(D3D11_SUBRESOURCE_DATA));
-	ZeroMemory(&image_sub_resource, sizeof(D3D11_SUBRESOURCE_DATA));
 	image_sub_resource.pSysMem = (void*)get_atlas_data();
 	image_sub_resource.SysMemPitch = image_texture_desc.Width;
 	image_sub_resource.SysMemSlicePitch = 0;
@@ -410,8 +409,8 @@ void bcdx11::resize(unsigned int width, unsigned int height)
 {
 	state::window_width = width;
 	state::window_height = height;
-	set_view_port();
-	set_matrix(0.0f, 0.0f, (float)state::window_width, (float)state::window_height);
+	set_view_port(0.0f, 0.0f, (float)width, (float)height);
+	set_matrix(0.0f, 0.0f, (float)width, (float)height);
 }
 
 void bcdx11::clear_device_objects()
@@ -429,7 +428,7 @@ void bcdx11::clear_device_objects()
 	safe_release(state::texture_shader_view);
 }
 
-void bcdx11::set_view_port()
+void bcdx11::set_view_port(float x, float y, float width, float height)
 {
 	D3D11_VIEWPORT view_port;
 	view_port.TopLeftX = 0.0f;

@@ -61,6 +61,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		factory::set_font(1);
 		factory::get_context()->text({ 50.0f, 50.f }, 1.0f, "The quick brown fox jumps over the lazy dog!", 0xFFFFFFFF, strlen("The quick brown fox jumps over the lazy dog!"));
 
+		factory::set_font(3);
+		factory::get_context()->glyph_icon({ 200.f, 200.f }, 2.0f, 103, 0xFFFFFFFF);
+
 		bcdx11::render();
 
 		swap_chain->Present(1, 0);
