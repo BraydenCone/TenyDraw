@@ -56,13 +56,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		context->OMSetRenderTargets(1, &render_target_view, 0);
 		context->ClearRenderTargetView(render_target_view, color);
 
-		factory::get_context()->push_command({ 0.0f, 0.0f, 1920.0f, 1080.0f });
-
-		factory::set_font(1);
-		factory::get_context()->text({ 50.0f, 50.f }, 1.0f, "The quick brown fox jumps over the lazy dog!", 0xFFFFFFFF, strlen("The quick brown fox jumps over the lazy dog!"));
-
-		factory::set_font(3);
-		factory::get_context()->glyph_icon({ 200.f, 200.f }, 2.0f, 103, 0xFFFFFFFF);
+		teny_draw::new_batch(0.0f, 0.0f, (float)window_width, (float)window_height);
+		teny_draw::text(50.0f, 50.f , 1.0f, 1, "The quick brown fox jumps over the lazy dog!", 0xFFFFFFFF);
+		teny_draw::icon(150.0f, 150.0f, 4.0f, 1, 0xFFFFFFFF, 0);
 
 		bcdx11::render();
 

@@ -398,7 +398,7 @@ namespace factory
 
 	batch_context* get_context();
 
-	void set_font(uint64_t index);
+	void set_font(uint32_t index);
 	float get_font_size();
 
 	glyph_base* get_glyph(uint64_t index);
@@ -447,4 +447,11 @@ namespace builder
 	(
 		factory::buffer_descriptor descriptor, factory::vec3 position, factory::rgba color, float scale, const char* str, uint64_t length
 	);
+}
+
+namespace teny_draw
+{
+	void new_batch(float x, float y, float width, float height);
+	void text(float x, float y, float scale, uint32_t font_size, const char* str, unsigned int color, uint64_t length = 0);
+	void icon(float x, float y, float scale, uint32_t font_size, unsigned int color, uint64_t index);
 }

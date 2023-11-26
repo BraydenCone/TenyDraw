@@ -130,9 +130,9 @@ factory::batch_context* factory::get_context()
 	return &g_context;
 }
 
-void factory::set_font(uint64_t index)
+void factory::set_font(uint32_t index)
 {
-	uint64_t i = (index + max) % max;
+	uint32_t i = (index + max) % max;
 	g_font.current_container = g_font.glyph_containers[i];
 	g_font.size = (float)(16 * (i + 1));
 }
@@ -400,4 +400,25 @@ void builder::text
 		position.x += ((float)glyph.advance * scale);
 	}
 	*descriptor.index_size = index;
+}
+
+void teny_draw::new_batch(float x, float y, float width, float height)
+{
+	g_context.push_command({ x, y, width, height });
+}
+
+void teny_draw::text(float x, float y, float scale, uint32_t font_size, const char* str, unsigned int color, uint64_t length)
+{
+	if (length == 0)
+	{
+		length = strlen(str);
+	}
+	factory::set_font(font_size);
+	g_context.text(factory::vec2(x, y), scale, str, color, length);
+}
+
+void teny_draw::icon(float x, float y, float scale, uint32_t font_size, unsigned int color, uint64_t index)
+{
+	factory::set_font(font_size);
+	g_context.glyph_icon(factory::vec2(x, y), scale, 95 + index, color);
 }
